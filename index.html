@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evin's Etch-A-Sketch!</title>
-    <link rel="stylesheet" href="">
-</head>
-<body>
-    <div>test!</div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Evin's etch a sketch</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body onload="populateBoard(16)">
+    <label for="boardSize">Choose a size</label>
+
+    <select id="boardSize" onchange="populateBoard(this.value)">
+      <option value="">Choose Size</option>
+      <option value="16">16x16</option>
+      <option value="32">32x32</option>
+      <option value="64">64x64</option>
+    </select>
+    <div>Click in the box to toggle the pen!</div>
+    <div class="colouringMode">Colouring mode: off</div>
+    <div class="buttons">
+      <button onclick="resetBoard()">Reset</button>
+      <button onclick="changeColour('white')">Erasor</button>
+      <button id= "randomButton" onclick="changeColour('random'),toggleRandomAndColour()" >Random</button>
+      <button id="toggleBorder" onclick="toggleBorder()">Remove grid</button>
+    </div>
+    <div>Choose Your colour!</div>
+    <input type="color" id = "colourPicker" value = "black" onchange="changeColour(this.value)">
+    <div class="board"></div>
+    
+  </body>
+
+    <script src = "index.js">
+
+    </script>
+
 </html>
