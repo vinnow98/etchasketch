@@ -1,89 +1,134 @@
 colour = document.getElementById("colourPicker").value;
-border = true;
-click = false;
-random = false;
+ colourPicker = document.querySelector("#colourPicker");
 
-function populateBoard(size) {
-  let board = document.querySelector(".board");
-  let squares = board.querySelectorAll("pixels");
-  squares.forEach((pixels) => pixels.remove());
-  board.style.display = "grid";
-  board.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-  amount = size * size;
-  for (i = 0; i < amount; i++) {
-    let square = document.createElement("pixels");
-    square.style.backgroundColor = "white";
-    square.style.border = "0.2px solid black";
-    square.addEventListener("mouseover", () => {
-      if (click) {
-        if (colour == "random") {
-          randomColour = Math.floor(Math.random() * 16777215).toString(16);
-          square.style.backgroundColor = "#" + randomColour;
-        } else {
-          square.style.backgroundColor = colour;
-        }
-      }
-    });
-    board.appendChild(square);
-  }
-}
+ border = true;
+ click = false;
+ random = false;
+ erasor = false;
 
-function toggleRandomAndColour() {
-  colourPicker = document.querySelector("#colourPicker");
+ function populateBoard(size) {
+   let board = document.querySelector(".board");
+   let squares = board.querySelectorAll("pixels");
+   squares.forEach((pixels) => pixels.remove());
+   board.style.display = "grid";
+   board.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+   amount = size * size;
+   for (i = 0; i < amount; i++) {
+     let square = document.createElement("pixels");
+     square.style.backgroundColor = "white";
+     square.style.border = "0.2px solid black";
+     square.addEventListener("mouseover", () => {
+       if (click) {
+         if (colour == "random") {
+           randomColour = Math.floor(Math.random() * 16777215).toString(16);
+           square.style.backgroundColor = "#" + randomColour;
+         } else {
+           square.style.backgroundColor = colour;
+         }
+       }
+     });
+     board.appendChild(square);
+   }
+ }
+ //start randomButtom
+ function toggleRandom() {
+   if (!random) {
+     randomOn();
+     colourPickerOff();
+     erasorOff();
+   } else {
+     randomOff();
+     colourPickerOn();
+     //colour changes to current colourpicker colour
+     colour = colourPicker.value;
+   }
+ }
+ function randomOn() {
+   randomButton.style.backgroundColor = "grey";
+   randomButton.style.transform = "translate(2px, 2px)";
+   random = true;
+ }
 
-  if (!random) {
-    randomButton.style.backgroundColor = "grey";
-    randomButton.style.transform = "translate(2px, 2px)";
-    random = true;
-    colourPicker.style.opacity = 0.5;
-    colourPicker.disabled = true;
-  } else {
-    randomButton.style.backgroundColor = "lightgray";
-    randomButton.style.transform = "none";
-    random = false;
-    colourPicker.style.opacity = 1;
-    colourPicker.disabled = false;
-    colour = colourPicker.value;
-  }
-}
+ function randomOff() {
+   randomButton.style.backgroundColor = "lightgray";
+   randomButton.style.transform = "none";
+   random = false;
+ }
+ // end of randomButton
 
-function changeColour(markerColour) {
-  colour = markerColour;
-  console.log(markerColour);
-}
+ //start erasorButton()
+ function toggleErasor() {
+   if (!erasor) {
+     erasorOn();
+     randomOff();
+     colourPickerOff();
+   } else {
+     erasorOff();
+     colourPickerOn();
+     colour = colourPicker.value;
+   }
+ }
 
-function toggleBorder() {
-  pixels = document.querySelectorAll("pixels");
-  toggleButton = document.getElementById("toggleBorder");
+ function erasorOn() {
+   erasorButton.style.backgroundColor = "grey";
+   erasorButton.style.transform = "translate(2px, 2px)";
+   erasor = true;
+ }
 
-  if (border == true) {
-    pixels.forEach((pixels) => {
-      pixels.style.border = "white";
-    });
-    toggleButton.textContent = "Add Grid";
-    border = false;
-  } else {
-    pixels.forEach((pixels) => {
-      pixels.style.border = "0.2px solid black";
-    });
-    toggleButton.textContent = "Remove Grid";
-    border = true;
-  }
-}
+ function erasorOff() {
+   erasorButton.style.backgroundColor = "lightgray";
+   erasorButton.style.transform = "none";
+   erasor = false;
+ }
+ //end erasorButton
 
-document.querySelector("body").addEventListener("click", (e) => {
-  if (e.target.tagName == "PIXELS") {
-    if (click) {
-      document.querySelector(".colouringMode").textContent =
-        "Colouring mode: off";
-      click = false;
-    } else {
-      document.querySelector(".colouringMode").textContent =
-        "Colouring mode: on";
-      click = true;
-    }
-  }
-});
+ //start colorPicker
+
+ function colourPickerOn() {
+   colourPicker.style.opacity = 1;
+   colourPicker.disabled = false;
+ }
+
+ function colourPickerOff() {
+   colourPicker.style.opacity = 0.5;
+   colourPicker.disabled = true;
+ }
+ //end colourpicker
+ function changeColour(markerColour) {
+   colour = markerColour;
+   console.log(markerColour);
+ }
+
+ function toggleBorder() {
+   pixels = document.querySelectorAll("pixels");
+   toggleButton = document.getElementById("toggleBorder");
+
+   if (border == true) {
+     pixels.forEach((pixels) => {
+       pixels.style.border = "white";
+     });
+     toggleButton.textContent = "Add Grid";
+     border = false;
+   } else {
+     pixels.forEach((pixels) => {
+       pixels.style.border = "0.2px solid black";
+     });
+     toggleButton.textContent = "Remove Grid";
+     border = true;
+   }
+ }
+
+ document.querySelector("body").addEventListener("click", (e) => {
+   if (e.target.tagName == "PIXELS") {
+     if (click) {
+       document.querySelector(".colouringMode").textContent = "Mode: off";
+       click = false;
+     } else {
+       document.querySelector(".colouringMode").textContent = "Mode: on";
+       click = true;
+     }
+   }
+ });
 function resetBoard() {
   pixels = document.querySelectorAll("pixels");
   pixels.forEach((pixels) => {

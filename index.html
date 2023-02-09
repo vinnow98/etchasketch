@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Evin's etch a sketch</title>
     <link rel="stylesheet" href="index.css" />
+    <link href='https://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet'>
   </head>
   <body onload="populateBoard(16)">
+<h1>Etch a Sketch</h1>
     <label for="boardSize">Choose a size</label>
-
     <select id="boardSize" onchange="populateBoard(this.value)">
       <option value="">Choose Size</option>
       <option value="16">16x16</option>
@@ -17,11 +18,11 @@
       <option value="64">64x64</option>
     </select>
     <div>Click in the box to toggle the pen!</div>
-    <div class="colouringMode">Colouring mode: off</div>
+    <div class="colouringMode">Mode: off</div>
     <div class="buttons">
       <button onclick="resetBoard()">Reset</button>
-      <button onclick="changeColour('white')">Erasor</button>
-      <button id= "randomButton" onclick="changeColour('random'),toggleRandomAndColour()" >Random</button>
+      <button id = "erasorButton" onclick="changeColour('white'),toggleErasor()">Erasor</button>
+      <button id= "randomButton" onclick="changeColour('random'),toggleRandom()" >Random</button>
       <button id="toggleBorder" onclick="toggleBorder()">Remove grid</button>
     </div>
     <div>Choose Your colour!</div>
