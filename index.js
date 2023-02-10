@@ -1,11 +1,16 @@
 colour = document.getElementById("colourPicker").value;
  colourPicker = document.querySelector("#colourPicker");
 
+ mouseDown = false;
  border = true;
- click = false;
  random = false;
  erasor = false;
-
+ document.body.onmousedown = () => {
+   mouseDown = true;
+ };
+ document.body.onmouseup = () => {
+   mouseDown = false;
+ };
  function populateBoard(size) {
    let board = document.querySelector(".board");
    let squares = board.querySelectorAll("pixels");
@@ -17,19 +22,22 @@ colour = document.getElementById("colourPicker").value;
      let square = document.createElement("pixels");
      square.style.backgroundColor = "white";
      square.style.border = "0.2px solid black";
-     square.addEventListener("mouseover", () => {
-       if (click) {
-         if (colour == "random") {
-           randomColour = Math.floor(Math.random() * 16777215).toString(16);
-           square.style.backgroundColor = "#" + randomColour;
-         } else {
-           square.style.backgroundColor = colour;
-         }
-       }
-     });
+     square.addEventListener("mouseover", squareEvent);
+     square.addEventListener("mousedown", squareEvent);
      board.appendChild(square);
    }
  }
+
+ function squareEvent(e) {
+   if (e.type === "mouseover" && !mouseDown) return;
+   if (colour == "random") {
+     randomColour = Math.floor(Math.random() * 16777215).toString(16);
+     this.style.backgroundColor = "#" + randomColour;
+   } else {
+     this.style.backgroundColor = colour;
+   }
+ }
+
  //start randomButtom
  function toggleRandom() {
    if (!random) {
@@ -118,17 +126,19 @@ colour = document.getElementById("colourPicker").value;
    }
  }
 
- document.querySelector("body").addEventListener("click", (e) => {
-   if (e.target.tagName == "PIXELS") {
-     if (click) {
-       document.querySelector(".colouringMode").textContent = "Mode: off";
-       click = false;
-     } else {
-       document.querySelector(".colouringMode").textContent = "Mode: on";
-       click = true;
-     }
-   }
- });
+ //Changed toggle to mousedown and mousehover(press and drag)
+//  click = false;
+//  document.querySelector("body").addEventListener("click", (e) => {
+//    if (e.target.tagName == "PIXELS") {
+//      if (click) {
+//        document.querySelector(".colouringMode").textContent = "Mode: off";
+//        click = false;
+//      } else {
+//        document.querySelector(".colouringMode").textContent = "Mode: on";
+//        click = true;
+//      }
+//    }
+//  });
 function resetBoard() {
   pixels = document.querySelectorAll("pixels");
   pixels.forEach((pixels) => {
