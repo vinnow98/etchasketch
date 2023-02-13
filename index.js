@@ -26,6 +26,8 @@ colour = document.getElementById("colourPicker").value;
      square.addEventListener("mousedown", squareEvent);
      board.appendChild(square);
    }
+   let sizeInput = document.querySelector(".size");
+   sizeInput.textContent = `${size} x ${size}`;
  }
 
  function squareEvent(e) {

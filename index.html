@@ -11,11 +11,16 @@
   <body onload="populateBoard(16)">
 <h1>Etch a Sketch</h1>
     <label for="boardSize">Choose a size</label>
-    <select id="boardSize" onchange="populateBoard(this.value)">
+    <br>
+    <input type="range" min= "4" max="100" value = "16" onchange="populateBoard(this.value)">
+    <div class = "size"></div>
+
+    <!-- This is for selectoption, i think range is better  -->
+    <!-- <select id="boardSize" onchange="populateBoard(this.value)">
       <option value="">Choose Size</option>
       <option value="16">16x16</option>
       <option value="32">32x32</option>
-      <option value="64">64x64</option>
+      <option value="64">64x64</option> -->
     </select>
     <div>Click in the box to toggle the pen!</div>
     <!-- <div class="colouringMode">Mode: off</div> -->
